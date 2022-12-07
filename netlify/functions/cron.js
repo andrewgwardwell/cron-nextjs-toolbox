@@ -1,6 +1,6 @@
 const contentful = require('contentful-management');
 // CFPAT-
-const ACCESS_TOKEN = CNTFL_ACCESS;
+const ACCESS_TOKEN = production.CNTFL_ACCESS;
 const spaceId = 'ii9ehdcj88bc';
 const envId = 'andrew-test';
 
