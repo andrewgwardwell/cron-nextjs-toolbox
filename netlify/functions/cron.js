@@ -1,6 +1,6 @@
 const contentful = require('contentful-management');
 // CFPAT-
-const ACCESS_TOKEN = process.env.CNTFL_ACCESS;
+const ACCESS_TOKEN = process.env.production.CNTFL_ACCESS;
 const spaceId = process.env.SPACE_ID;
 const envId = 'andrew-test';
 
@@ -16,6 +16,7 @@ export const handler = async (event) => {
 
     // Now that we have a space, we can get entries from that space
     const entries = await environment.getEntries({limit: 1, content_type:'learnPage'});
+    const entry = entries.items[0];
     const fixedEntry = {
       "sys": {
           "type": "Link",
@@ -23,11 +24,8 @@ export const handler = async (event) => {
           "id": "739Yao78oRwksRTUjMtJ6v"
       }
     };
-    let updated;
-    entries.items.forEach(async (entry) => {
-      entry.fields.footerModules["en-US"].splice(0, 0, fixedEntry);
-      updated = await (await entry.update()).publish();
-    });
+    entry.fields.footerModules["en-US"].splice(0, 0, fixedEntry);
+    const updated = await (await entry.update()).publish();
 
     return {
       statusCode: 200,
